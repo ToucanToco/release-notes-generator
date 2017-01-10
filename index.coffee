@@ -3,7 +3,7 @@ _ = require 'lodash'
 fp = require 'lodash/fp'
 
 args = require('yargs').argv
-AUTH = require 'auth.json'
+AUTH = require './auth.json'
 
 OWNER = args.owner
 REPO = args.repo
