@@ -15,7 +15,7 @@ throw 'Need a owner!' unless OWNER
 throw 'Need a repo!' unless REPO
 throw 'Need a pr!' unless PR
 
-CATEGORIES = require 'categories'
+CATEGORIES = require './categories'
 
 github = new GitHubApi
   # debug: true
