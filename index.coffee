@@ -3,26 +3,19 @@ _ = require 'lodash'
 fp = require 'lodash/fp'
 
 args = require('yargs').argv
+AUTH = require 'auth.json'
 
+OWNER = args.owner
 REPO = args.repo
 PR = args.pr
 LOG = args.log
 
+throw 'Generate a GitHub token first!' unless AUTH.token?
+throw 'Need a owner!' unless OWNER
 throw 'Need a repo!' unless REPO
 throw 'Need a pr!' unless PR
 
-CATEGORIES = [
-  label: 'enhancement'
-  title: 'New features'
-,
-  label: 'bug'
-  title: 'Fixes'
-,
-  label: 'doc'
-  title: 'Doc'
-,
-  title: 'Miscellanous'
-]
+CATEGORIES = require 'categories'
 
 github = new GitHubApi
   # debug: true
@@ -36,9 +29,8 @@ github = new GitHubApi
   timeout: 5000
 
 github.authenticate
-  type: 'basic'
-  username: 'davinov'
-  password: 'Daltan301191'
+  type: 'oauth'
+  token: auth.token
 
 
 _getPRMergedForRelease = (config) ->
@@ -130,7 +122,7 @@ updatePullRequestBody = (config) ->
 
 
 generateReleaseNotes
-  owner: 'ToucanToco'
+  owner: OWNER
   repo: REPO
   pr: PR
   categories: CATEGORIES
@@ -139,7 +131,7 @@ generateReleaseNotes
     console.log releaseNotes
   else
     updatePullRequestBody
-      owner: 'ToucanToco'
+      owner: OWNER
       repo: REPO
       pr: PR
       body: releaseNotes
