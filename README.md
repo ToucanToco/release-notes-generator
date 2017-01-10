@@ -16,7 +16,7 @@ Put your desired tags in `categories.coffee`.
 
 ## Usage
 
-    npm start -- --repo [tucana/laputa] --pr [pr number] [--log]
+    npm start -- --owner [owner's account] --repo [repo name] --pr [pr number] [--log]
 
 Options:
 - `--log`: only log the release notes, don't update the PR description
