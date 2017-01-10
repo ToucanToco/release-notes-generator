@@ -30,7 +30,7 @@ github = new GitHubApi
 
 github.authenticate
   type: 'oauth'
-  token: auth.token
+  token: AUTH.token
 
 
 _getPRMergedForRelease = (config) ->
