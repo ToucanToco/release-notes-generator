@@ -1,3 +1,6 @@
+_ = require 'lodash'
+fp = require 'lodash/fp'
+
 github = require './github'
 
 _getPRMergedForRelease = (config) ->

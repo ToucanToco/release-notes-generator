@@ -33,3 +33,16 @@ Example: generates the changelog for the release PR #736 of ToucanToco/tucana
 and only displays it
 
     npm start -- release-notes --owner ToucanToco --repo tucana --pr 736 --log
+
+## Prepare release `prepare-release`
+Creates or update a Pull Request and generate changelog in its body.
+
+    npm start -- preprare-release --owner [owner's account] --repo [repo name] --title [Release codename] [--beta]
+
+Options:
+- `--beta`: instead of from dev (or beta) to master branch, creates a PR from
+  dev to beta
+
+Example: creates the PR from dev to next for ToucanToco/tucana
+
+    npm start -- preprare-release --owner ToucanToco --repo tucana --title "Purple Lilac Panda" --beta

@@ -1,6 +1,3 @@
-_ = require 'lodash'
-fp = require 'lodash/fp'
-
 args = require('yargs').argv
 
 github = require './github'
@@ -59,6 +56,60 @@ switch COMMAND
           owner: OWNER
           repo: REPO
           pr: PR
+          body: releaseNotes
+
+  when 'preprare-release'
+    BETA = args.beta
+    BRANCHES = PARAMETERS.branches
+    TITLE = args.title
+
+    throw 'This release should have a title!' unless TITLE?
+    throw 'You must define a master branch!' unless BRANCHES.master?
+    throw 'You must define a dev branch!' unless BRANCHES.dev?
+
+    if BETA
+      throw 'You must define a beta branch!' unless BRANCHES.beta?
+      baseBranch = BRANCHES.beta
+      targetBranch = BRANCHES.dev
+    else
+      baseBranch = BRANCHES.master
+      # If there is a beta branch, releases should come from there!
+      targetBranch = BRANCHES.beta or BRANCHES.dev
+
+    releaseTitle = "Release #{TITLE}"
+    releaseTitle += ' beta' if BETA
+
+    # Is there already a PR?
+    github.pullRequests.create
+      owner: OWNER
+      repo: REPO
+      title: releaseTitle
+      head: targetBranch
+      base: baseBranch
+    .catch (e) ->
+      # Check if a PR already exists
+      github.pullRequests.getAll
+        owner: OWNER
+        repo: REPO
+        head: targetBranch
+        base: baseBranch
+      .then (prs) ->
+        github.pullRequests.update
+          owner: OWNER
+          repo: REPO
+          number: prs[0].number
+          title: releaseTitle
+    .then (pr) ->
+      releaseNotes.generate
+        owner: OWNER
+        repo: REPO
+        pr: pr.number
+        categories: PARAMETERS.categories
+      .then (releaseNotes) ->
+        updatePullRequestBody
+          owner: OWNER
+          repo: REPO
+          pr: pr.number
           body: releaseNotes
 
   else
