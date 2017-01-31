@@ -1,5 +1,5 @@
-# Release notes
-Generates a changelog using merged PRs and their labels for categorization.
+# Release generator
+
 
 ## Install
 
@@ -12,11 +12,19 @@ the `auth.json` file.
 
 ## Customization
 
-Put your desired tags in `categories.coffee`.
+Modify `parameters.coffee` according to your needs:
+- put branches names
+- put your desired tags in categories
 
 ## Usage
+Available commands:
+- `release-notes`
+- ....
 
-    npm start -- --owner [owner's account] --repo [repo name] --pr [pr number] [--log]
+### Release notes `release-notes`
+Generates a changelog using merged PRs and their labels for categorization.
+
+    npm start -- release-notes --owner [owner's account] --repo [repo name] --pr [pr number] [--log]
 
 Options:
 - `--log`: only log the release notes, don't update the PR description
@@ -24,4 +32,4 @@ Options:
 Example: generates the changelog for the release PR #736 of ToucanToco/tucana
 and only displays it
 
-  npm start -- --owner ToucanToco --repo tucana --pr 736 --log
+    npm start -- release-notes --owner ToucanToco --repo tucana --pr 736 --log
