@@ -11,7 +11,7 @@ _getPRMergedForRelease = (config) ->
     per_page: 100
   .then (res) ->
     commitMessages = _.map res, (c) -> c.commit.message
-    prNumberRegex = /#\d*/
+    prNumberRegex = /#\d+/
     mergedPullRequests = _ commitMessages
       .map (cm) -> prNumberRegex.exec(cm)?[0]
       .without undefined
