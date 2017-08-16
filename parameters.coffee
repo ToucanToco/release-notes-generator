@@ -5,7 +5,7 @@ module.exports =
     master: 'master'
 
   categories: [
-    label: 'enhancement'
+    label: 'feature'
     title: 'New features'
   ,
     label: 'bug'
@@ -13,6 +13,9 @@ module.exports =
   ,
     label: 'doc'
     title: 'Doc'
+  ,
+    label: 'tech'
+    title: 'Miscellanous'
   ,
     title: 'Miscellanous'
   ]
